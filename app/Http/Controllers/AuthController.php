@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\SignUpRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +15,7 @@ class AuthController extends Controller
     /**
      * User auth method
      *
-     * @param Request $request
+     * @param LoginRequest $request
      * @return JsonResponse
      */
     public function login(LoginRequest $request): JsonResponse
@@ -32,14 +32,14 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token,
-            'user' => $user,
+            'user' => new UserResource($user),
         ]);
     }
 
     /**
      * User sign up method
      *
-     * @param Request $request
+     * @param SignUpRequest $request
      * @return JsonResponse
      */
     public function signUp(SignUpRequest $request): JsonResponse
@@ -54,7 +54,7 @@ class AuthController extends Controller
 
         return response()->json([
             'token' => $token,
-            'user' => $user,
+            'user' => new UserResource($user),
         ], 201);
     }
 

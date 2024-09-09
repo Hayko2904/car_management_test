@@ -73,6 +73,7 @@ const fileAdded = ref(false)
 onMounted(async () => {
     if (route.params.id) {
         isEditing.value = true;
+
         try {
             const response = await apiClient.get(`cars/${route.params.id}`);
             car.value = response.data.data;
@@ -85,6 +86,7 @@ onMounted(async () => {
 
 const handleFileChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
         car.value.image = file;
         previewImage.value = URL.createObjectURL(file);
@@ -102,12 +104,14 @@ const submit = async () => {
             }
             formData.append(key, car.value[key]);
         }
+
         if (isEditing.value) {
             formData.append('_method', 'PUT');
             await apiClient.post(`cars/${route.params.id}`, formData);
         } else {
             await apiClient.post('cars', formData);
         }
+
         await router.push('/home'); // Redirect to car list page
     } catch (error) {
         console.error('Error saving car:', error);

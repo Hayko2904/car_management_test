@@ -14,6 +14,7 @@
                 <th class="px-6 py-3 text-left font-medium uppercase tracking-wider cursor-pointer hover:bg-gray-200" @click="sort('price')">Price</th>
                 <th class="px-6 py-3 text-left font-medium uppercase tracking-wider cursor-pointer hover:bg-gray-200" @click="sort('description')">Description</th>
                 <th class="px-6 py-3 text-left font-medium uppercase tracking-wider">Image</th>
+                <th class="px-6 py-3 text-left font-medium uppercase tracking-wider cursor-pointer hover:bg-gray-200" @click="sort('created_at')">Created at</th>
                 <th class="px-6 py-3 text-left font-medium uppercase tracking-wider">Action</th>
             </tr>
             </thead>
@@ -27,6 +28,7 @@
                 <td class="px-6 py-4 whitespace-nowrap">
                     <img :src="car.image" alt="Car Image" class="w-16 h-16 object-cover rounded-md border border-gray-300 shadow-sm" />
                 </td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ dayjs(car.created_at).format('DD-MM-YYYY') }}</td>
                 <td class="px-6 py-4 whitespace-nowrap flex space-x-4">
                     <button @click="editCar(car.id)" class="text-blue-600 hover:text-blue-800 font-semibold transition duration-150 ease-in-out">Edit</button>
                     <button @click="deleteCar(car.id)" class="text-red-600 hover:text-red-800 font-semibold transition duration-150 ease-in-out">Delete</button>
@@ -61,6 +63,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { apiClient } from '../api.js';
+import dayjs from "dayjs";
 
 const router = useRouter();
 const cars = ref([]);
@@ -83,6 +86,7 @@ onMounted(async () => {
     if (!localStorage.getItem('user') && !localStorage.getItem('token')) {
         await router.push('/login')
     }
+
     await fetchCars(); // Fetch initial page of cars
 });
 

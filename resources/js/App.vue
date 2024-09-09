@@ -45,6 +45,7 @@ const isAuthenticated = ref(false);
 
 const checkAuthStatus = () => {
     const token = localStorage.getItem('token');
+
     isAuthenticated.value = !!token;
 };
 

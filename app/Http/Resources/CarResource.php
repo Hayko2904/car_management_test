@@ -23,7 +23,8 @@ class CarResource extends JsonResource
             'year' => $this->year,
             'price' => $this->price,
             'description' => $this->description,
-            'image' => $this->image ? Storage::url($this->image) : null
+            'image' => $this->image ? Storage::url($this->image) : null,
+            'created_at' => $this->created_at
         ];
     }
 }
