@@ -49,6 +49,16 @@
             </button>
 
             <button
+                v-for="(link, index) in pagination.links.slice(0, pagination.links.length - 2)"
+                key="index"
+                @click="fetchCars(index + 1)"
+                :disabled="link.active === 1"
+                class="cursor-pointer px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 ml-2"
+            >
+                {{ index + 1 }}
+            </button>
+
+            <button
                 @click="fetchCars(pagination.current_page + 1)"
                 :disabled="pagination.current_page === pagination.last_page"
                 class="cursor-pointer px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 ml-2"
@@ -77,6 +87,7 @@ const fetchCars = async (page = 1) => {
 
         cars.value = response.data.data || [];
         pagination.value = response.data.meta;
+
     } catch (error) {
         console.error('Error fetching cars:', error);
     }
