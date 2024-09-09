@@ -37,8 +37,12 @@ This project is a car management API built with Laravel. It allows users to crea
 6. Run database migrations: 
     ```bash
    php artisan migrate
+   
+7. Create a link for the storage/public directory
+    ```bash
+   php artisan storage:link
 
-7. Start the development server:
+8. Start the development server:
     ```bash
    php artisan serve
 
